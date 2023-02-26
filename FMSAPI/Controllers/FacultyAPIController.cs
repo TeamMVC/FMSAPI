@@ -47,6 +47,10 @@ namespace FMSAPI.Controllers
             return Ok(User);
         }
 
+        public IQueryable<Tbl_Faculty> GetTbl_FacultyList(string data)
+        {
+            return db.Tbl_Faculty;
+        }
         // GET: api/FacultyAPI/5
         [ResponseType(typeof(Tbl_Faculty))]
         public IHttpActionResult GetTbl_Faculty(int id)
@@ -161,6 +165,34 @@ namespace FMSAPI.Controllers
         private bool Tbl_FacultyExists(int id)
         {
             return db.Tbl_Faculty.Count(e => e.Faculty_ID == id) > 0;
+        }
+        public IHttpActionResult GetTbl_Faculty(string EmailID)
+        {
+            var User = (from f in db.Tbl_Faculty
+                        join d in db.Tbl_Department
+                        on f.Dept_ID equals d.Dept_ID
+                        join c in db.Tbl_Course
+                        on f.Assign_Course_ID equals c.Course_ID
+                        join u in db.tbl_UserLogin
+                        on f.EmailID equals u.Email
+                        where f.EmailID == EmailID
+                        select new GetFacultyData
+                        {
+                            FacultyID = f.Faculty_ID,
+                            Faculty_Name = f.Faculty_Name,
+                            Faculty_Qualification = f.Faculty_Qualification,
+                            Address = f.Address,
+                            ContactNo = f.ContactNo,
+                            Gender = f.Gender,
+                            Dept_ID = f.Dept_ID,
+                            Dept_Name = d.Dept_Name,
+                            Assign_Course_ID = f.Assign_Course_ID,
+                            Assign_Course = c.Course_Name,
+                            EmailID = u.Email,
+                            Password = u.Passward
+                        }).ToList();
+
+            return Ok(User);
         }
     }
 }

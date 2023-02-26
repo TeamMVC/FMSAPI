@@ -33,6 +33,8 @@ namespace FMSAPI.Models
         public virtual DbSet<tbl_Role> tbl_Role { get; set; }
         public virtual DbSet<Tbl_RoleMapping> Tbl_RoleMapping { get; set; }
         public virtual DbSet<tbl_UserLogin> tbl_UserLogin { get; set; }
+        public virtual DbSet<Tbl_WorkExperience> Tbl_WorkExperience { get; set; }
+        public virtual DbSet<Tbl_BookPublish> Tbl_BookPublish { get; set; }
     
         public virtual ObjectResult<GetDepartment_Result> GetDepartment()
         {

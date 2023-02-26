@@ -5,6 +5,15 @@
     <!-- SSDL content -->
     <edmx:StorageModels>
     <Schema Namespace="FacultyManagementSystemModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+        <EntityType Name="Tbl_BookPublish">
+          <Key>
+            <PropertyRef Name="PublishID" />
+          </Key>
+          <Property Name="PublishID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="BookName" Type="varchar" MaxLength="200" />
+          <Property Name="Publish_Date" Type="datetime" />
+          <Property Name="FacultyID" Type="int" />
+        </EntityType>
         <EntityType Name="Tbl_Course">
           <Key>
             <PropertyRef Name="Course_ID" />
@@ -78,14 +87,26 @@
           <Property Name="CreatedOn" Type="datetime" />
           <Property Name="UpdatedOn" Type="datetime" />
         </EntityType>
+        <EntityType Name="Tbl_WorkExperience">
+          <Key>
+            <PropertyRef Name="WorkID" />
+          </Key>
+          <Property Name="WorkID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="FacultyID" Type="int" />
+          <Property Name="Course" Type="varchar(max)" />
+          <Property Name="Experience" Type="varchar" MaxLength="50" />
+          <Property Name="Skills" Type="varchar" MaxLength="500" />
+        </EntityType>
         <Function Name="GetDepartment" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo" />
         <EntityContainer Name="FacultyManagementSystemModelStoreContainer">
+          <EntitySet Name="Tbl_BookPublish" EntityType="Self.Tbl_BookPublish" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Tbl_Course" EntityType="Self.Tbl_Course" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Tbl_Department" EntityType="Self.Tbl_Department" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Tbl_Faculty" EntityType="Self.Tbl_Faculty" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="tbl_Role" EntityType="Self.tbl_Role" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Tbl_RoleMapping" EntityType="Self.Tbl_RoleMapping" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="tbl_UserLogin" EntityType="Self.tbl_UserLogin" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Tbl_WorkExperience" EntityType="Self.Tbl_WorkExperience" Schema="dbo" store:Type="Tables" />
         </EntityContainer>
       </Schema></edmx:StorageModels>
     <!-- CSDL content -->
@@ -141,6 +162,8 @@
           <EntitySet Name="tbl_Role" EntityType="FacultyManagementSystemModel.tbl_Role" />
           <EntitySet Name="Tbl_RoleMapping" EntityType="FacultyManagementSystemModel.Tbl_RoleMapping" />
           <EntitySet Name="tbl_UserLogin" EntityType="FacultyManagementSystemModel.tbl_UserLogin" />
+          <EntitySet Name="Tbl_WorkExperience" EntityType="FacultyManagementSystemModel.Tbl_WorkExperience" />
+          <EntitySet Name="Tbl_BookPublish" EntityType="FacultyManagementSystemModel.Tbl_BookPublish" />
         </EntityContainer>
         <ComplexType Name="GetDepartment_Result">
           <Property Type="Int32" Name="Dept_ID" Nullable="false" />
@@ -181,6 +204,25 @@
           <Property Name="UpdatedBy" Type="Int32" />
           <Property Name="CreatedOn" Type="DateTime" Precision="3" />
           <Property Name="UpdatedOn" Type="DateTime" Precision="3" />
+        </EntityType>
+        <EntityType Name="Tbl_WorkExperience">
+          <Key>
+            <PropertyRef Name="WorkID" />
+          </Key>
+          <Property Name="WorkID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="FacultyID" Type="Int32" />
+          <Property Name="Course" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
+          <Property Name="Experience" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="Skills" Type="String" MaxLength="500" FixedLength="false" Unicode="false" />
+        </EntityType>
+        <EntityType Name="Tbl_BookPublish">
+          <Key>
+            <PropertyRef Name="PublishID" />
+          </Key>
+          <Property Name="PublishID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="BookName" Type="String" MaxLength="200" FixedLength="false" Unicode="false" />
+          <Property Name="Publish_Date" Type="DateTime" Precision="3" />
+          <Property Name="FacultyID" Type="Int32" />
         </EntityType>
       </Schema>
     </edmx:ConceptualModels>
@@ -277,6 +319,27 @@
                 <ScalarProperty Name="Email" ColumnName="Email" />
                 <ScalarProperty Name="Name" ColumnName="Name" />
                 <ScalarProperty Name="Id" ColumnName="Id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Tbl_WorkExperience">
+            <EntityTypeMapping TypeName="FacultyManagementSystemModel.Tbl_WorkExperience">
+              <MappingFragment StoreEntitySet="Tbl_WorkExperience">
+                <ScalarProperty Name="Skills" ColumnName="Skills" />
+                <ScalarProperty Name="Experience" ColumnName="Experience" />
+                <ScalarProperty Name="Course" ColumnName="Course" />
+                <ScalarProperty Name="FacultyID" ColumnName="FacultyID" />
+                <ScalarProperty Name="WorkID" ColumnName="WorkID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Tbl_BookPublish">
+            <EntityTypeMapping TypeName="FacultyManagementSystemModel.Tbl_BookPublish">
+              <MappingFragment StoreEntitySet="Tbl_BookPublish">
+                <ScalarProperty Name="FacultyID" ColumnName="FacultyID" />
+                <ScalarProperty Name="Publish_Date" ColumnName="Publish_Date" />
+                <ScalarProperty Name="BookName" ColumnName="BookName" />
+                <ScalarProperty Name="PublishID" ColumnName="PublishID" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
